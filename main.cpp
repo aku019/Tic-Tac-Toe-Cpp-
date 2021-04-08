@@ -139,11 +139,15 @@ class tictactoe{
 int main() {
 	// your code goes here
 	string player1,player2;
+  cout<<"The first player gets 'x' symbol and the second player gets 'o' symbol\n";
+
   cout<<"Enter first player name\n";
 	cin>>player1;
-  cout<<"Enter first player name\n";
+  cout<<"Enter second player name\n";
 	cin>>player2;
-	tictactoe game(player1,player2);
+	cout<<"Enter x and y components as a number between 0 and 2\n";
+
+  tictactoe game(player1,player2);
 	game.display();
 	int moves=0;
 	int finished=0;
@@ -153,7 +157,7 @@ int main() {
     cout<<game.getPlayer1();
     else
     cout<<game.getPlayer2();
- 		cout<<" Enter the x and y components\n";
+ 		cout<<" enter the x and y components\n";
  		int x,y;
  		cin>>x>>y;
 		if(!x &&!y)

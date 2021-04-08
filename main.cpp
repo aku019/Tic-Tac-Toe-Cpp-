@@ -123,6 +123,8 @@ class tictactoe{
 	
 	int move(int x,int y,int moves)
 	{
+    x--;
+    y--;
 		if(x<0||y<0||x>2||y>2||a[x][y]!='-')
 			return -1;
 		if(moves%2==0)
@@ -138,15 +140,15 @@ class tictactoe{
 };
 
 int main() {
-	// your code goes here
+	
 	string player1,player2;
   cout<<"The first player gets 'x' symbol and the second player gets 'o' symbol\n";
 
-  cout<<"Enter first player name\n";
+  cout<<"Enter first player name with symbol 'x'\n";
 	cin>>player1;
-  cout<<"Enter second player name\n";
+  cout<<"Enter second player name with symbol 'o'\n";
 	cin>>player2;
-	cout<<"Enter x and y components as a number between 0 and 2\n";
+	cout<<"Enter x and y components as a number between 1 and 3\n";
 
   tictactoe game(player1,player2);
 	game.display();

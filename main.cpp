@@ -1,17 +1,20 @@
 #include <iostream>
 using namespace std;
-
+#define size 100
 class tictactoe{
 	string player1,player2;
-	char a[3][3];
+  int xrange,yrange;
+	char a[size][size];
 	public:
-	tictactoe(string p1,string p2)
+	tictactoe(string p1,string p2,int x,int y)
 	{
 		player1=p1;
 		player2=p2;
-		for(int i=0;i<3;i++)
+    xrange=x-1;
+    yrange=y-1;
+		for(int i=0;i<x;i++)
 		{
-			for(int j=0;j<3;j++)
+			for(int j=0;j<y;j++)
 				a[i][j]='-';
 		}
 	}
@@ -19,9 +22,9 @@ class tictactoe{
 	
 	void display(){
     cout<<"The board looks like:\n";
-		for(int i=0;i<3;i++)
+		for(int i=0;i<=xrange;i++)
 		{
-			for(int j=0;j<3;j++)
+			for(int j=0;j<=yrange;j++)
 				cout<<a[i][j]<<" ";
 			cout<<endl;
 		}
@@ -37,102 +40,89 @@ class tictactoe{
 	{
 		return player2;
 	}
+
+  bool upperdiagonal(int x,int y)
+  {
+    if(x!=y)
+    return false;
     
-	int winner(int x,int y)
+    for(int i=0;i<=xrange;i++)
+    {
+      if(a[i][i]!=a[x][y])
+      return false;
+
+    }
+    return true;
+  }
+
+  bool lowerdiagonal(int x,int y)
+  {
+    if((x+y)!=xrange)
+    return false;
+    int j=0;
+    for(int i=xrange;i>=0;i--)
+    {
+      if(a[xrange-i][i]!=a[x][y])
+      return false;
+
+    }
+    return true;
+  }
+  bool vertical(int x,int y)
+  {
+    for(int i=0;i<=yrange;i++)
+    {
+      if(a[x][i]!=a[x][y])
+      return  false;
+
+    }
+    
+    return true;
+  }
+
+  bool horizontal(int x,int y)
+  {
+    for(int i=0;i<=xrange;i++)
+    {
+      if(a[i][y]!=a[x][y])
+      return  false;
+
+    }
+    
+    return true;
+  }
+
+
+
+
+	int winner2(int x,int y)
 	{
-		if(x==0&&y==0)
-		{
-			if(a[x+1][y]==a[x][y]&&a[x+2][y]==a[x][y])
-				return 1;
-			if(a[x][y+1]==a[x][y]&&a[x][y+2]==a[x][y])
-				return 1;
-			if(a[x+1][y+1]==a[x][y]&&a[x+2][y+2]==a[x][y])
-				return 1;
-		}
-		if(x==0&&y==1)
-		{
-			if(a[x+1][y]==a[x][y]&&a[x+2][y]==a[x][y])
-				return 1;
-			if(a[x][y+1]==a[x][y]&&a[x][y-1]==a[x][y])
-				return 1;
-		}
-		if(x==0&&y==2)
-		{
-			if(a[x+1][y]==a[x][y]&&a[x+2][y]==a[x][y])
-				return 1;
-			if(a[x][y-1]==a[x][y]&&a[x][y-2]==a[x][y])
-				return 1;
-			if(a[x+1][y-1]==a[x][y]&&a[x+2][y-2]==a[x][y])
-				return 1;
-		}
-		if(x==1&&y==0)
-		{
-			if(a[x+1][y]==a[x][y]&&a[x-1][y]==a[x][y])
-				return 1;
-			if(a[x][y+1]==a[x][y]&&a[x][y+2]==a[x][y])
-				return 1;
-		}
-		if(x==1&&y==1)
-		{
-			if(a[x+1][y]==a[x][y]&&a[x-1][y]==a[x][y])
-				return 1;
-			if(a[x][y-1]==a[x][y]&&a[x][y+1]==a[x][y])
-				return 1;
-			if(a[x-1][y-1]==a[x][y]&&a[x+1][y+1]==a[x][y])
-				return 1;
-		}
-		if(x==1&&y==2)
-		{
-			if(a[x+1][y]==a[x][y]&&a[x-1][y]==a[x][y])
-				return 1;
-			if(a[x][y-1]==a[x][y]&&a[x][y-2]==a[x][y])
-				return 1;
-		}
-		if(x==2&&y==0)
-		{
-			if(a[x-1][y]==a[x][y]&&a[x-2][y]==a[x][y])
-				return 1;
-			if(a[x][y+1]==a[x][y]&&a[x][y+2]==a[x][y])
-				return 1;
-			if(a[x-1][y+1]==a[x][y]&&a[x-2][y+2]==a[x][y])
-				return 1;
-			
-		}
-		if(x==2&&y==1)
-		{
-			if(a[x-1][y]==a[x][y]&&a[x-2][y]==a[x][y])
-				return 1;
-			if(a[x][y+1]==a[x][y]&&a[x][y-1]==a[x][y])
-				return 1;
-			
-		}
-		if(x==2&&y==2)
-		{
-			if(a[x-1][y]==a[x][y]&&a[x-2][y]==a[x][y])
-				return 1;
-			if(a[x][y+1]==a[x][y]&&a[x][y+2]==a[x][y])
-				return 1;
-			if(a[x-1][y-1]==a[x][y]&&a[x-2][y-2]==a[x][y])
-				return 1;
-			
-		}
-		
-		return 0;
+		if(upperdiagonal(x,y))
+    return 1;
+    if(lowerdiagonal(x,y))
+    return 1;
+    if(vertical(x,y))
+    return  1;
+    if(horizontal(x,y))
+    return 1;
+
+    return 0;
 		
 	}
+
 	
 	int move(int x,int y,int moves)
 	{
     x--;
     y--;
-		if(x<0||y<0||x>2||y>2||a[x][y]!='-')
+		if(x<0||y<0||x>xrange||y>yrange||a[x][y]!='-')
 			return -1;
 		if(moves%2==0)
 			a[x][y]='x';
 		else
 			a[x][y]='o';
 			
-		int result=winner(x,y);
+		int result=winner2(x,y);
 			
 		display();
 		return result;
@@ -150,7 +140,7 @@ int main() {
 	cin>>player2;
 	cout<<"Enter x and y components as a number between 1 and 3\n";
 
-  tictactoe game(player1,player2);
+  tictactoe game(player1,player2,3,3);
 	game.display();
 	int moves=0;
 	int finished=0;
